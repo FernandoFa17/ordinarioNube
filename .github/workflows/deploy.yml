@@ -34,8 +34,8 @@ jobs:
       uses: azure/docker-login@v1
       with:
         login-server: miacr17.azurecr.io
-        username: ${{ secrets.AZURE_USERNAME }}
-        password: ${{ secrets.AZURE_PASSWORD }}
+        username: aa9c6179-9386-4d8e-9974-b46af9e24363 # Este es el clientId
+        password: mVC8Q~UYudFf25.-om5jJUhTTWKHFF_5ghrWCav1 # Este es el clientSecret
 
     - run: |
         docker build -t miacr17.azurecr.io/flask-api .
