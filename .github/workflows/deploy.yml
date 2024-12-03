@@ -16,13 +16,26 @@ jobs:
     - name: Login to Azure
       uses: azure/login@v1
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        creds: >
+          {
+            "clientId": "aa9c6179-9386-4d8e-9974-b46af9e24363",
+            "clientSecret": "mVC8Q~UYudFf25.-om5jJUhTTWKHFF_5ghrWCav1",
+            "subscriptionId": "69777d3b-1f65-44b3-be8a-8f5ae5ad1737",
+            "tenantId": "0d8d6b97-e05d-460c-b6b5-19b7d020f47a",
+            "activeDirectoryEndpointUrl": "https://login.microsoftonline.com",
+            "resourceManagerEndpointUrl": "https://management.azure.com/",
+            "activeDirectoryGraphResourceId": "https://graph.windows.net/",
+            "sqlManagementEndpointUrl": "https://management.core.windows.net:8443/",
+            "galleryEndpointUrl": "https://gallery.azure.com/",
+            "managementEndpointUrl": "https://management.core.windows.net/"
+          }
 
     - name: Build and Push Docker image
       uses: azure/docker-login@v1
       with:
         login-server: miacr17.azurecr.io
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        username: ${{ secrets.AZURE_USERNAME }}
+        password: ${{ secrets.AZURE_PASSWORD }}
 
     - run: |
         docker build -t miacr17.azurecr.io/flask-api .
