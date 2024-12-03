@@ -1,0 +1,36 @@
+name: Deploy to Azure
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Login to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Build and Push Docker image
+      uses: azure/docker-login@v1
+      with:
+        login-server: <tu_acr_name>.azurecr.io
+        username: ${{ secrets.AZURE_USERNAME }}
+        password: ${{ secrets.AZURE_PASSWORD }}
+
+    - run: |
+        docker build -t <tu_acr_name>.azurecr.io/flask-api .
+        docker push <tu_acr_name>.azurecr.io/flask-api
+
+    - name: Deploy to Azure Web App
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: <tu_webapp_name>
+        images: <tu_acr_name>.azurecr.io/flask-api:latest
