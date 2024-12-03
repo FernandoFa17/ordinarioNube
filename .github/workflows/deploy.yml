@@ -21,16 +21,16 @@ jobs:
     - name: Build and Push Docker image
       uses: azure/docker-login@v1
       with:
-        login-server: <tu_acr_name>.azurecr.io
+        login-server: miacr17.azurecr.io
         username: ${{ secrets.AZURE_USERNAME }}
         password: ${{ secrets.AZURE_PASSWORD }}
 
     - run: |
-        docker build -t <tu_acr_name>.azurecr.io/flask-api .
-        docker push <tu_acr_name>.azurecr.io/flask-api
+        docker build -t miacr17.azurecr.io/flask-api .
+        docker push miacr17.azurecr.io/flask-api
 
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v2
       with:
-        app-name: <tu_webapp_name>
-        images: <tu_acr_name>.azurecr.io/flask-api:latest
+        app-name: webappordinariofdo
+        images: miacr17.azurecr.io/flask-api:latest
